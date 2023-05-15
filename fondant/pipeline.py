@@ -225,7 +225,7 @@ class Pipeline:
                 for (
                     component_subset_name,
                     component_subset,
-                ) in component_spec.input_subsets.items():
+                ) in component_spec.consumes.items():
                     if component_subset_name not in manifest.subsets:
                         raise InvalidPipelineDefinition(
                             f"Component '{component_spec.name}' "
