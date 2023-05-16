@@ -141,7 +141,7 @@ class ComponentSpec:
 
     @property
     def consumes(self) -> t.Mapping[str, ComponentSubset]:
-        """The input subsets of the component as an immutable mapping."""
+        """The subsets consumed by the component as an immutable mapping."""
         return types.MappingProxyType(
             {
                 name: ComponentSubset(subset)
@@ -152,7 +152,7 @@ class ComponentSpec:
 
     @property
     def produces(self) -> t.Mapping[str, ComponentSubset]:
-        """The output subsets of the component as an immutable mapping."""
+        """The subsets produced by the component as an immutable mapping."""
         return types.MappingProxyType(
             {
                 name: ComponentSubset(subset)

@@ -205,21 +205,21 @@ class Manifest:
             "location"
         ] = f"/index/{self.run_id}/{component_id}"
 
-        # If additionalSubsets is False in component input subsets,
+        # If additionalSubsets is False in consumes,
         # Remove all subsets from the manifest that are not listed
         if not component_spec.accepts_additional_subsets:
             for subset_name in evolved_manifest.subsets:
                 if subset_name not in component_spec.consumes:
                     evolved_manifest.remove_subset(subset_name)
 
-        # If additionalSubsets is False in component output subsets,
+        # If additionalSubsets is False in produces,
         # Remove all subsets from the manifest that are not listed
         if not component_spec.outputs_additional_subsets:
             for subset_name in evolved_manifest.subsets:
                 if subset_name not in component_spec.produces:
                     evolved_manifest.remove_subset(subset_name)
 
-        # If additionalFields is False for input subsets,
+        # If additionalFields is False for a consumed subset,
         # Remove all fields from that subset that are not listed
         for subset_name, subset in component_spec.consumes.items():
             if subset_name in evolved_manifest.subsets:
@@ -235,7 +235,7 @@ class Manifest:
             # Subset is already in manifest, update it
             if subset_name in evolved_manifest.subsets:
                 # If additional fields are not allowed, remove the fields not defined in the
-                # component spec output subsets
+                # component spec produces section
                 if not subset.additional_fields:
                     for field_name in evolved_manifest.subsets[subset_name].fields:
                         if field_name not in subset.fields:
@@ -243,7 +243,7 @@ class Manifest:
                                 field_name
                             )
 
-                # Add fields defined in the component spec output subsets
+                # Add fields defined in the component spec produces section
                 # Overwrite to persist changes to the field (eg. type of column)
                 for field in subset.fields.values():
                     evolved_manifest.subsets[subset_name].add_field(
